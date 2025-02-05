@@ -208,7 +208,7 @@ const PhoneLookup = () => {
         <footer>
           <nav className="navbar navbar-expand-lg border-top">
             <div className="container">
-              <div className="row">
+              <div className="row ">
                 <div className="col-md-8">
                   <a className="navbar-brand" href="https://oceanpbx.club/">
                     <img className="img-fluid w-25" src="https://oceanpbx.club/assets/img/logo.png" alt="" />
