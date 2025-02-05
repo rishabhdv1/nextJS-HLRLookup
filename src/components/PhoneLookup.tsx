@@ -260,6 +260,9 @@ const PhoneLookup = () => {
             </div>
           </section>
           <div className="container">
+            <section>
+              <iframe src="https://www.hlr-lookups.com/videos/hlr-lookups.webm"></iframe>
+            </section>
             <section className="text-center">
               <h1 className="m-4">Easy phone number verification</h1>
               <div className="row">
