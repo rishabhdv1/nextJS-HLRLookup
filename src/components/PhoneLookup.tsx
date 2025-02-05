@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import countries from '@/helper/Countries';
 import { timeStamp } from 'console';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faCheckCircle, faDesktop, faGlobe, faPhone, faShield, faStopwatch, faTicket, faTty } from '@fortawesome/free-solid-svg-icons';
+import { faBook, faCheckCircle, faChevronCircleLeft, faChevronCircleRight, faDesktop, faGlobe, faPhone, faShield, faStopwatch, faTicket, faTty } from '@fortawesome/free-solid-svg-icons';
 const iconMap: Record<string, any> = {
   phone: faPhone,
   desktop: faDesktop,
@@ -146,119 +146,6 @@ const PhoneLookup = () => {
                         <code>{apiResponse}</code>
                         </pre>
                     </div>
-                    <div className="card mt-4">
-                      <h1 className="fw-bold text-center">Result</h1>
-                      <ul className="list-group list-group-flush custom-list-group">
-                        <li className="list-group-item">
-                            <span><strong>status</strong></span>
-                            <span>1</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>status_message</strong></span>
-                            <span>Success</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>lookup_outcome</strong></span>
-                            <span>1</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>lookup_outcome_message</strong></span>
-                            <span>Success</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>international_format_number</strong></span>
-                            <span>919274884923</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>international_formatted</strong></span>
-                            <span>+91 9274884923</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>national_format_number</strong></span>
-                            <span>09274884923</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>country_code</strong></span>
-                            <span>IN</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>country_name</strong></span>
-                            <span>India</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>country_prefix</strong></span>
-                            <span>91</span>
-                        </li>
-                        <li className="list-group-item">
-                            <ul className='nav flex-column'>
-                              <li className="nav-item"><strong>network_code:</strong></li>
-                              <li className="nav-item"><strong>name:</strong></li>
-                              <li className="nav-item"><strong>country:</strong></li>
-                              <li className="nav-item"><strong>network_type:</strong></li>
-                              <li className="nav-item"><strong>network_code:</strong></li>
-                              <li className="nav-item"><strong>name:</strong></li>
-                              <li className="nav-item"><strong>country:</strong></li>
-                              <li className="nav-item"><strong>network_type:</strong></li>
-                            </ul>
-                            <ul className='nav flex-column'>
-                              <li className="nav-item">405863</li>
-                              <li className="nav-item">Reliance Jio Infocomm Ltd (RJIL)</li>
-                              <li className="nav-item">IN</li>
-                              <li className="nav-item">mobile</li>
-                              <li className="nav-item">405863</li>
-                              <li className="nav-item">Reliance Jio Infocomm Ltd (RJIL)</li>
-                              <li className="nav-item">IN</li>
-                              <li className="nav-item">mobile</li>
-                            </ul>
-                        </li>
-                        <li className="list-group-item">
-                            <ul className='nav flex-column'>
-                            <li className="nav-item"><strong>network_code:</strong></li>
-                              <li className="nav-item"><strong>name:</strong></li>
-                              <li className="nav-item"><strong>country:</strong></li>
-                              <li className="nav-item"><strong>network_type:</strong></li>
-                              <li className="nav-item"><strong>network_code:</strong></li>
-                              <li className="nav-item"><strong>name:</strong></li>
-                              <li className="nav-item"><strong>country:</strong></li>
-                              <li className="nav-item"><strong>network_type:</strong></li>
-                            </ul>
-                            <ul className='nav flex-column'>
-                              <li className="nav-item">405863</li>
-                              <li className="nav-item">Reliance Jio Infocomm Ltd (RJIL)</li>
-                              <li className="nav-item">IN</li>
-                              <li className="nav-item">mobile</li>
-                              <li className="nav-item">405863</li>
-                              <li className="nav-item">Reliance Jio Infocomm Ltd (RJIL)</li>
-                              <li className="nav-item">IN</li>
-                              <li className="nav-item">mobile</li>
-                            </ul>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>valid_number</strong></span>
-                            <span>Valid</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>reachable</strong></span>
-                            <span>Reachable</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>ported</strong></span>
-                            <span>Assumed Not Ported</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>roaming</strong></span>
-                            <span>Not Roaming</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>gsm_code</strong></span>
-                            <span>0</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>gsm_message</strong></span>
-                            <span>No Error</span>
-                        </li>
-                      </ul>
-                    </div>
                   </div>
                 )}
               </div>
@@ -269,13 +156,13 @@ const PhoneLookup = () => {
               <h1 className="m-4 text-center" >How HLR/DNCR Work ?</h1>
               <iframe src="https://www.hlr-lookups.com/videos/hlr-lookups.webm" style={{ width: '100%', height: '100vh', border: 'none' }}></iframe>
             </section>
-            <section className="text-center">
+            <section className="text-center mb-4">
               <h1 className="m-4">Easy phone number verification</h1>
               <div className="row">
                 {verification.map((item, index) => (
                   <div key={index} className="col-md-4 mb-4">
                     <div className="card p-4" style={{ minHeight: '250px' }}>
-                      <FontAwesomeIcon style={{ fontSize: '2em' }} className="mb-4" icon={iconMap[item.icon]} />
+                      <FontAwesomeIcon style={{ fontSize: '2em', color: '#2563EB' }} className="mb-4" icon={iconMap[item.icon]} />
                       <h3 className="feature-title">{item.title}</h3>
                       <span className="feature-desc">
                         <span>{item.subtitle}</span>
@@ -284,11 +171,28 @@ const PhoneLookup = () => {
                   </div>
                 ))}
               </div>
+              <button className="btn bg-custom rounded-5 text-white">
+                <FontAwesomeIcon icon={faChevronCircleRight} />
+                <span>&nbsp;Discuss All The Features Of HLR/DNCR Lookup</span>
+              </button>
             </section>
           </div>
         </main>
-        <footer className="bg-light p-4 text-center">
-          <span>HLR/DNCR Lookup</span>
+        <footer>
+          <nav className="navbar navbar-expand-lg border-top">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-8">
+                  <a className="navbar-brand" href="#">
+                    <img className="img-fluid w-25" src="https://oceanpbx.club/assets/img/logo.png" alt="" />
+                  </a>
+                </div>
+                <div className="col-md-4">
+                  <span>Copyright © 2025 OceanPBX. All Rights Reserved.</span>
+                </div>
+              </div>
+            </div>
+          </nav>
         </footer>
     </div>
   );

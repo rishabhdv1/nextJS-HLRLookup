@@ -50,8 +50,8 @@ a {
 
 
 .bg-custom {
-  background: #2563EB;
-  color: #fff;
+  background: #2563EB !important;
+  color: #fff !important;
 }
 .orbitron, .banner-content > .banner-title {
   font-family: Orbitron, sans-serif;
@@ -83,7 +83,7 @@ p {
 }
 .feature-desc {
   color: rgb(50, 56, 61);
-  font-family: Montserrat, serif;
+  /* font-family: Montserrat, serif; */
   font-size: 16px;
   text-align: center;
 }
