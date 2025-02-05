@@ -87,3 +87,9 @@ p {
   font-size: 16px;
   text-align: center;
 }
+
+.custom-list-group > li {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 100px;
+}

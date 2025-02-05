@@ -118,7 +118,7 @@ const PhoneLookup = () => {
             </nav>
         </header>
         <main>
-          <section className="bg-custom" style={{ minHeight: '90vh' }}>
+          <section className="bg-custom" style={{ minHeight: '60vh' }}>
             <div className="container">
               <div className="text-center pt-5 pb-5">
                 <h1 className="fw-bold">HLR/DNCR Lookup</h1>
@@ -146,113 +146,120 @@ const PhoneLookup = () => {
                         <code>{apiResponse}</code>
                         </pre>
                     </div>
-                    <div className="">
-                      <table className="table">
-                        <tbody>
-                          <tr>
-                            <td>status</td>
-                            <td>1</td>
-                          </tr>
-                          <tr>
-                            <td>status_message</td>
-                            <td>success</td>
-                          </tr>
-                          <tr>
-                            <td>lookup_outcome</td>
-                            <td>1</td>
-                          </tr>
-                          <tr>
-                            <td>lookup_outcome_message</td>
-                            <td>success</td>
-                          </tr>
-                          <tr>
-                            <td>international_format_number</td>
-                            <td>919274884923</td>
-                          </tr>
-                          <tr>
-                            <td>international_formatted</td>
-                            <td>+91 9274884923</td>
-                          </tr>
-                          <tr>
-                            <td>national_format_number</td>
-                            <td>09274884923</td>
-                          </tr>
-                          <tr>
-                            <td>country_code</td>
-                            <td>IN</td>
-                          </tr>
-                          <tr>
-                            <td>country_name</td>
-                            <td>India</td>
-                          </tr>
-                          <tr>
-                            <td>country_prefix</td>
-                            <td>91</td>
-                          </tr>
-                          <tr>
-                            <td>current_carrier</td>
-                            <td>
-                              <div className="row">
-                                <div className="col">
-                                  <h6>network_code:</h6>
-                                  <h6>name:</h6>
-                                  <h6>country:</h6>
-                                  <h6>network_type:</h6>
-                                </div>
-                                <div className="col">
-                                  <h6>405863</h6>
-                                  <h6>Reliance Jio Infocomm Ltd (RJIL)</h6>
-                                  <h6>IN</h6>
-                                  <h6>mobile</h6>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>original_carrier</td>
-                            <td>
-                              <div className="row">
-                                <div className="col">
-                                  <h6>network_code:</h6>
-                                  <h6>name:</h6>
-                                  <h6>country:</h6>
-                                  <h6>network_type:</h6>
-                                </div>
-                                <div className="col">
-                                  <h6>405863</h6>
-                                  <h6>Reliance Jio Infocomm Ltd (RJIL)</h6>
-                                  <h6>IN</h6>
-                                  <h6>mobile</h6>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>valid_number</td>
-                            <td>valid</td>
-                          </tr>
-                          <tr>
-                            <td>reachable</td>
-                            <td>reachable</td>
-                          </tr>
-                          <tr>
-                            <td>ported</td>
-                            <td>assumed_not_ported</td>
-                          </tr>
-                          <tr>
-                            <td>roaming</td>
-                            <td>not_roaming</td>
-                          </tr>
-                          <tr>
-                            <td>gsm_code</td>
-                            <td>0</td>
-                          </tr>
-                          <tr>
-                            <td>gsm_message</td>
-                            <td>No error</td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div className="card mt-4">
+                      <h1 className="fw-bold text-center">Result:</h1>
+                      <ul className="list-group list-group-flush custom-list-group">
+                        <li className="list-group-item">
+                            <span><strong>status</strong></span>
+                            <span>1</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>status_message</strong></span>
+                            <span>Success</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>lookup_outcome</strong></span>
+                            <span>1</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>lookup_outcome_message</strong></span>
+                            <span>Success</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>international_format_number</strong></span>
+                            <span>919274884923</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>international_formatted</strong></span>
+                            <span>+91 9274884923</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>national_format_number</strong></span>
+                            <span>09274884923</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>country_code</strong></span>
+                            <span>IN</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>country_name</strong></span>
+                            <span>India</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>country_prefix</strong></span>
+                            <span>91</span>
+                        </li>
+                        <li className="list-group-item">
+                          <span><strong>network_code</strong></span>
+                            <ul className='nav flex-column'>
+                              <li className="nav-item"><strong>network_code:</strong></li>
+                              <li className="nav-item"><strong>name:</strong></li>
+                              <li className="nav-item"><strong>country:</strong></li>
+                              <li className="nav-item"><strong>network_type:</strong></li>
+                              <li className="nav-item"><strong>network_code:</strong></li>
+                              <li className="nav-item"><strong>name:</strong></li>
+                              <li className="nav-item"><strong>country:</strong></li>
+                              <li className="nav-item"><strong>network_type:</strong></li>
+                            </ul>
+                            <ul className='nav flex-column'>
+                              <li className="nav-item">405863</li>
+                              <li className="nav-item">Reliance Jio Infocomm Ltd (RJIL)</li>
+                              <li className="nav-item">IN</li>
+                              <li className="nav-item">mobile</li>
+                              <li className="nav-item">405863</li>
+                              <li className="nav-item">Reliance Jio Infocomm Ltd (RJIL)</li>
+                              <li className="nav-item">IN</li>
+                              <li className="nav-item">mobile</li>
+                            </ul>
+                        </li>
+                        <li className="list-group-item">
+                          <span><strong>network_type</strong></span>
+                            <ul className='nav flex-column'>
+                            <li className="nav-item"><strong>network_code:</strong></li>
+                              <li className="nav-item"><strong>name:</strong></li>
+                              <li className="nav-item"><strong>country:</strong></li>
+                              <li className="nav-item"><strong>network_type:</strong></li>
+                              <li className="nav-item"><strong>network_code:</strong></li>
+                              <li className="nav-item"><strong>name:</strong></li>
+                              <li className="nav-item"><strong>country:</strong></li>
+                              <li className="nav-item"><strong>network_type:</strong></li>
+                            </ul>
+                            <ul className='nav flex-column'>
+                              <li className="nav-item">405863</li>
+                              <li className="nav-item">Reliance Jio Infocomm Ltd (RJIL)</li>
+                              <li className="nav-item">IN</li>
+                              <li className="nav-item">mobile</li>
+                              <li className="nav-item">405863</li>
+                              <li className="nav-item">Reliance Jio Infocomm Ltd (RJIL)</li>
+                              <li className="nav-item">IN</li>
+                              <li className="nav-item">mobile</li>
+                            </ul>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>valid_number</strong></span>
+                            <span>Valid</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>reachable</strong></span>
+                            <span>Reachable</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>ported</strong></span>
+                            <span>Assumed Not Ported</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>roaming</strong></span>
+                            <span>Not Roaming</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>gsm_code</strong></span>
+                            <span>0</span>
+                        </li>
+                        <li className="list-group-item">
+                            <span><strong>gsm_message</strong></span>
+                            <span>No Error</span>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 )}
@@ -260,8 +267,9 @@ const PhoneLookup = () => {
             </div>
           </section>
           <div className="container">
-            <section>
-              <iframe src="https://www.hlr-lookups.com/videos/hlr-lookups.webm"></iframe>
+            <section  className="mt-5">
+              <h1 className="m-4 text-center" >How HLR/DNCR Work ?</h1>
+              <iframe src="https://www.hlr-lookups.com/videos/hlr-lookups.webm" style={{ width: '100%', height: '100vh', border: 'none' }}></iframe>
             </section>
             <section className="text-center">
               <h1 className="m-4">Easy phone number verification</h1>
@@ -281,6 +289,9 @@ const PhoneLookup = () => {
             </section>
           </div>
         </main>
+        <footer className="bg-light p-4 text-center">
+          <span>HLR/DNCR Lookup</span>
+        </footer>
     </div>
   );
 };
