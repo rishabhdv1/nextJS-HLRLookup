@@ -132,7 +132,7 @@ const PhoneLookup = () => {
         <header style={{ height: '10vh' }}>
             <nav className="navbar navbar-expand-lg navbar-light">
                 <div className="container">
-                    <a className="navbar-brand" href="#">
+                    <a className="navbar-brand" href="https://oceanpbx.club/">
                         <img className="img-fluid w-25" src="https://oceanpbx.club/assets/img/logo.png" alt="" />
                     </a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
@@ -140,8 +140,14 @@ const PhoneLookup = () => {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarContent">
                     <form className="d-flex ms-auto">
-                        <button className="btn btn-outline-primary me-2">Sign Up</button>
-                        <button className="btn btn-primary">Login</button>
+                      <ul className="nav nav-pills">
+                        <li className="nav-item me-2">
+                          <a className="nav-link bg-primary text-white" aria-current="page" href="https://oceanpbx.club/">Sign Up</a>
+                        </li>
+                        <li className="nav-item">
+                          <a className="nav-link bg-primary text-white" href="https://oceanpbx.club/">Login</a>
+                        </li>
+                      </ul>
                     </form>
                     </div>
                 </div>
@@ -203,10 +209,6 @@ const PhoneLookup = () => {
                   </div>
                 ))}
               </div>
-              <button className="btn bg-custom rounded-5 text-white">
-                <FontAwesomeIcon icon={faChevronCircleRight} />
-                <span>&nbsp;Discuss All The Features Of HLR/DNCR Lookup</span>
-              </button>
             </section>
           </div>
         </main>
@@ -215,12 +217,12 @@ const PhoneLookup = () => {
             <div className="container">
               <div className="row">
                 <div className="col-md-8">
-                  <a className="navbar-brand" href="#">
+                  <a className="navbar-brand" href="https://oceanpbx.club/">
                     <img className="img-fluid w-25" src="https://oceanpbx.club/assets/img/logo.png" alt="" />
                   </a>
                 </div>
-                <div className="col-md-4">
-                  <span>Copyright © 2025 OceanPBX. All Rights Reserved.</span>
+                <div className="col-md-4 text-end">
+                  <span className="d-block mt-2">Copyright © 2025 OceanPBX. All Rights Reserved.</span>
                 </div>
               </div>
             </div>
