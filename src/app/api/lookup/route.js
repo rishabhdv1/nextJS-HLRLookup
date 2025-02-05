@@ -63,6 +63,13 @@ export async function GET(request) {
       { status: 400 }
     );
   }
+  // const phoneNumber = parsePhoneNumberFromString(number);
+  // if (!phoneNumber || !phoneNumber.isValid()) {
+  //   return new Response(
+  //     JSON.stringify({ error: "Invalid phone number format" }),
+  //     { status: 200 }
+  //   );
+  // }
 
   try {
     const country = determineCountry(number);

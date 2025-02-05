@@ -74,42 +74,13 @@ const PhoneLookup = () => {
     const foramteNumber = formattedCountryCode + phoneNumber;
     setShowResult(true);
     setApiResponse('Fetching API response...');  
+    console.log("foramteNumber",foramteNumber);
     try {
       const apiResponse = await handleAPICall(foramteNumber,lookupType);
       setApiResponse(JSON.stringify(apiResponse, null, 2));
     } catch (error) {
-      setApiResponse(`Error fetching data: ${error}`);
+      setApiResponse(`${error}`);
     }
-    
-    // setTimeout(() => {
-    //     const response = {
-    //       detected_telephone_number: `${countryCode}${phoneNumber}`,
-    //       live_status: 'LIVE',
-    //       disposable_number: 'Register to view',
-    //       ported_date: 'Register to view',
-    //       current_network_details: {
-    //         name: 'Register to view',
-    //         mccmnc: 'Register to view',
-    //         country_name: 'INdia',
-    //         country_iso3: 'INdia',
-    //         area: 'Delhi',
-    //         country_prefix: countryCode
-    //       },
-    //       original_network: 'AVAILABLE',
-    //       original_network_details: {
-    //         name: 'Reliance Jio',
-    //         mccmnc: '404',
-    //         country_name: 'INDIA',
-    //         country_iso3: 'IND',
-    //         area: 'india',
-    //         country_prefix: countryCode
-    //       },
-    //       timeStamp: '2025-02-05T06:01:23Z',
-    //       telephone_number_type: 'MOBILE'
-    //     };
-    //   setApiResponse(JSON.stringify(response, null, 2));
-    // }, 2000);
-
 
   };
   const handleAPICall = async (formattedNumber: any,lookupType:any) => {
