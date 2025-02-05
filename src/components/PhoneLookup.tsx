@@ -89,6 +89,7 @@ const PhoneLookup = () => {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarContent">
                     <form className="d-flex ms-auto">
+                        <button className="btn btn-outline-primary me-2">Sign Up</button>
                         <button className="btn btn-primary">Login</button>
                     </form>
                     </div>
@@ -98,49 +99,49 @@ const PhoneLookup = () => {
         <main className="bg-custom" style={{ minHeight: '90vh' }}>
             <div className="container">
                 <div className="text-center pt-5 pb-5">
-                    <h1 className="fw-bold">Globle Phone Validation Made Simple</h1>
-                    <p className="lead">Check if a telephone number is contactable by querying the worldwide HLR</p>
-                    <p>Enter a telephone number with the country code prefix below:</p>
+                  <h1 className="fw-bold">Global Phone Number Verification</h1>
+                  <p className="lead">Verify if a phone number is active and reachable using worldwide HLR lookup</p>
+                  <p>Enter a phone number along with the country code below:</p>
 
-                    <div className="card shadow p-4 mx-auto" >
-                        <div className="input-group">
-                            <select id="lookupType" className="input-group-text">
-                                <option value="hlr">HLR</option>
-                                <option value="dncr">DNCR</option>
-                            </select>
-                            <select id="country-select" className="input-group-text w-25">
-                                <option value="">Select Country</option>
-                            </select>
-                            <input type="tel" className="form-control" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-                            <button className="btn btn-primary" onClick={handleSearch}>Search</button>
-                        </div>
-                    {/* <div className="row g-2">
-                        <div className="col-md-3">
-                            <select id="lookupType" className="form-select">
-                                <option value="hlr">HLR</option>
-                                <option value="dncr">DNCR</option>
-                            </select>
-                        </div>
-                        <div className="col-md-4">
-                            <select id="country-select" className="form-select">
-                                <option value="">Select Country</option>
-                            </select>
-                        </div>
-                        <div className="col-md-5">
-                            <input type="tel" className="form-control" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-                        </div>
-                    </div> */}
-                    {/* <button className="btn btn-primary w-100 mt-3" onClick={handleSearch}>Search</button> */}
+                  <div className="card shadow p-4 mx-auto" >
+                    <div className="input-group">
+                        <select id="lookupType" className="input-group-text">
+                            <option value="hlr">HLR</option>
+                            <option value="dncr">DNCR</option>
+                        </select>
+                        <select id="country-select" className="input-group-text w-25">
+                            <option value="">Select Country</option>
+                        </select>
+                        <input type="tel" className="form-control" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{  }} />
+                        <button className="btn btn-primary" onClick={handleSearch}>Search</button>
                     </div>
+                  {/* <div className="row g-2">
+                      <div className="col-md-3">
+                          <select id="lookupType" className="form-select">
+                              <option value="hlr">HLR</option>
+                              <option value="dncr">DNCR</option>
+                          </select>
+                      </div>
+                      <div className="col-md-4">
+                          <select id="country-select" className="form-select">
+                              <option value="">Select Country</option>
+                          </select>
+                      </div>
+                      <div className="col-md-5">
+                          <input type="tel" className="form-control" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                      </div>
+                  </div> */}
+                  {/* <button className="btn btn-primary w-100 mt-3" onClick={handleSearch}>Search</button> */}
+                  </div>
 
-                    {showResult && (
-                    <div className="card shadow p-4 mx-auto mt-4 text-start">
-                        <h5 className="fw-bold">API Result:</h5>
-                        <pre className="bg-dark text-success p-3 rounded">
-                        <code>{apiResponse}</code>
-                        </pre>
-                    </div>
-                    )}
+                  {showResult && (
+                  <div className="card shadow p-4 mx-auto mt-4 text-start">
+                      <h5 className="fw-bold">API Result:</h5>
+                      <pre className="bg-dark text-success p-3 rounded">
+                      <code>{apiResponse}</code>
+                      </pre>
+                  </div>
+                  )}
                 </div>
             </div>
         </main>
