@@ -13,6 +13,6 @@ const countries = [
     { code: '+84', name: 'Vietnam', flagUrl: 'https://flagcdn.com/w40/vn.png' },
     { code: '+81', name: 'Japan', flagUrl: 'https://flagcdn.com/w40/jp.png' },
     { code: '+82', name: 'South Korea', flagUrl: 'https://flagcdn.com/w40/kr.png' }
-  ];
+];
 
-
+export default countries;
