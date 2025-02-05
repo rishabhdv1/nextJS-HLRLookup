@@ -185,7 +185,7 @@ const PhoneLookup = () => {
           </section>
           <div className="container">
             <section  className="mt-5">
-              <h1 className="m-4 text-center" >How HLR/DNCR Work ?</h1>
+              <h1 className="m-4 text-center" >How HLR/DNCR Work ? </h1>
               <iframe src="https://www.hlr-lookups.com/videos/hlr-lookups.webm" style={{ width: '100%', height: '100vh', border: 'none' }}></iframe>
             </section>
             <section className="text-center mb-4">
