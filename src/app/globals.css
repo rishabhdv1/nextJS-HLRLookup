@@ -76,3 +76,14 @@ p {
 .tom-select .dropdown-item img {
   margin-right: 10px;
 }
+
+.feature-title {
+  font-size: 20px;
+  font-weight: 400;
+}
+.feature-desc {
+  color: rgb(50, 56, 61);
+  font-family: Montserrat, serif;
+  font-size: 16px;
+  text-align: center;
+}
