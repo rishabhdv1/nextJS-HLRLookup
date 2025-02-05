@@ -190,7 +190,6 @@ const PhoneLookup = () => {
                             <span>91</span>
                         </li>
                         <li className="list-group-item">
-                          <span><strong>network_code</strong></span>
                             <ul className='nav flex-column'>
                               <li className="nav-item"><strong>network_code:</strong></li>
                               <li className="nav-item"><strong>name:</strong></li>
@@ -213,7 +212,6 @@ const PhoneLookup = () => {
                             </ul>
                         </li>
                         <li className="list-group-item">
-                          <span><strong>network_type</strong></span>
                             <ul className='nav flex-column'>
                             <li className="nav-item"><strong>network_code:</strong></li>
                               <li className="nav-item"><strong>name:</strong></li>
