@@ -193,7 +193,7 @@ const PhoneLookup = () => {
                   </a>
                 </div>
                 <div className="col-md-4 text-end">
-                  <span className="d-block mt-2">Copyright © 2025 OceanPBX. All Rights Reserved.</span>
+                  <span className="d-block mt-2 ">Copyright © 2025 OceanPBX. All Rights Reserved.</span>
                 </div>
               </div>
             </div>
