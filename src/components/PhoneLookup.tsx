@@ -5,6 +5,7 @@ import TomSelect from 'tom-select';
 import 'tom-select/dist/css/tom-select.default.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import countries from '@/helper/Countries';
+import { timeStamp } from 'console';
 
 const PhoneLookup = () => {
   const [countryCode, setCountryCode] = useState('');
@@ -44,17 +45,29 @@ const PhoneLookup = () => {
 
     setTimeout(() => {
         const response = {
-            detected_telephone_number: `${countryCode}${phoneNumber}`,
-            original_network: 'NOT_AVAILABLE',
-            live_status: '<a href="https://www.google.com/" class="text-blue-400 underline">Register to view</a>',
-            disposable_number: '<a href="https://www.google.com/" class="text-blue-400 underline">Register to view</a>',
-            ported_date: '<a href="https://www.google.com/" class="text-blue-400 underline">Register to view</a>',
-            current_network_details: {
-              name: '<a href="https://www.google.com/" class="text-blue-400 underline">Register to view</a>',
-              country_name: 'countryName',
-              area: 'areaName',
-              country_prefix: countryCode
-            }
+          detected_telephone_number: `${countryCode}${phoneNumber}`,
+          live_status: 'LIVE',
+          disposable_number: 'Register to view',
+          ported_date: 'Register to view',
+          current_network_details: {
+            name: 'Register to view',
+            mccmnc: 'Register to view',
+            country_name: 'INdia',
+            country_iso3: 'INdia',
+            area: 'Delhi',
+            country_prefix: countryCode
+          },
+          original_network: 'AVAILABLE',
+          original_network_details: {
+            name: 'Reliance Jio',
+            mccmnc: '404',
+            country_name: 'INDIA',
+            country_iso3: 'IND',
+            area: 'india',
+            country_prefix: countryCode
+          },
+          timeStamp: '2025-02-05T06:01:23Z',
+          telephone_number_type: 'MOBILE'
         };
       setApiResponse(JSON.stringify(response, null, 2));
     }, 2000);
