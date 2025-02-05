@@ -6,30 +6,6 @@ import 'tom-select/dist/css/tom-select.default.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import countries from '@/helper/Countries';
 import { timeStamp } from 'console';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBook, faCheckCircle, faDesktop, faGlobe, faPhone, faShield, faStopwatch, faTicket, faTty } from '@fortawesome/free-solid-svg-icons';
-const iconMap: Record<string, any> = {
-  phone: faPhone,
-  desktop: faDesktop,
-  globe: faGlobe,
-  shield: faShield,
-  ticket: faTicket,
-  book: faBook,
-  checkCircle: faCheckCircle,
-  stopWatch: faStopwatch,
-  tty: faTty,
-};
-const verification = [
-  { icon: 'phone', title: 'Fast Data Cleaning for Telephone Numbers', subtitle: 'Upload all your data in one go, in its current format. We\'ll insert your results alongside your original data, in the same order.'},
-  { icon: 'desktop', title: 'Simple API Integration', subtitle: 'Easy to use, easy to understand. Send up to 80 requests in one secure API request and we\'ll return the results quickly, in a clear format so you can integrate seamlessly.'},
-  { icon: 'globe', title: 'USA, Europe, Africa, Asia, Americas, Oceana coverage', subtitle: 'Extensive worldwide coverage for over 1200 mobile telephone network carriers.'},
-  { icon: 'shield', title: 'Reduce fraud with ported date details', subtitle: 'For 51 different countries we provide the last ported date for any ported mobile telephone number.'},
-  { icon: 'ticket', title: 'Fast automated top-up', subtitle: 'Quickly get back to business using our fully automated topup system.'},
-  { icon: 'book', title: 'Test and Analyse for free', subtitle: 'Sign up is free. Support is Free. Testing is free. We know you don’t know how valuable we are to your business without giving us a try first so all new accounts get free credits.'},
-  { icon: 'checkCircle', title: 'Eliminate Deduplication', subtitle: 'We can store your results for up to 30 days and provide your cached result at no charge. There’s no need to spend time checking your data against previous results.'},
-  { icon: 'stopWatch', title: 'Schedule batches', subtitle: 'We can store your results for up to 30 days and provide your cached result at no charge. There’s no need to spend time checking your data against previous results.'},
-  { icon: 'tty', title: 'Landline Validation', subtitle: 'HLR Lookup is compatible with the UK and Ireland landline networks, to detect if a landline telephone number is active. Not available outside the UK or Ireland.'},
-];
 
 const PhoneLookup = () => {
   const [countryCode, setCountryCode] = useState('');
@@ -117,166 +93,37 @@ const PhoneLookup = () => {
                 </div>
             </nav>
         </header>
-        <main>
-          <section className="bg-custom" style={{ minHeight: '90vh' }}>
+        <main className="bg-custom" style={{ minHeight: '90vh' }}>
             <div className="container">
-              <div className="text-center pt-5 pb-5">
-                <h1 className="fw-bold">HLR/DNCR Lookup</h1>
-                <p className="lead">Perform a HLR and DNCR lookup to check validity and availability of a mobile or landline number worldwide.</p>
+                <div className="text-center pt-5 pb-5">
+                  <h1 className="fw-bold">Global Phone Number Verification</h1>
+                  <p className="lead">Verify if a phone number is active and reachable using worldwide HLR lookup</p>
+                  <p>Enter a phone number along with the country code below:</p>
 
-                <div className="card shadow p-4 mx-auto" >
-                  <div className="input-group">
-                      <select id="lookupType" className="input-group-text">
-                          <option value="hlr">HLR</option>
-                          <option value="dncr">DNCR</option>
-                      </select>
-                      <select id="country-select" className="input-group-text w-25">
-                          <option value="">Select Country</option>
-                      </select>
-                      <input type="number" className="form-control" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{ boxShadow: 'none', border: '1px solid #ccc' }} />
-                      <button className="btn btn-primary" onClick={handleSearch}>Search</button>
+                  <div className="card shadow p-4 mx-auto" >
+                    <div className="input-group">
+                        <select id="lookupType" className="input-group-text">
+                            <option value="hlr">HLR</option>
+                            <option value="dncr">DNCR</option>
+                        </select>
+                        <select id="country-select" className="input-group-text w-25">
+                            <option value="">Select Country</option>
+                        </select>
+                        <input type="tel" className="form-control" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{  }} />
+                        <button className="btn btn-primary" onClick={handleSearch}>Search</button>
+                    </div>
                   </div>
+
+                  {showResult && (
+                  <div className="card shadow p-4 mx-auto mt-4 text-start">
+                      <h5 className="fw-bold">API Result:</h5>
+                      <pre className="bg-dark text-success p-3 rounded">
+                      <code>{apiResponse}</code>
+                      </pre>
+                  </div>
+                  )}
                 </div>
-
-                {showResult && (
-                  <div className="">
-                    <div className="card shadow p-4 mx-auto mt-4 text-start">
-                        <h5 className="fw-bold">API Result:</h5>
-                        <pre className="bg-dark text-success p-3 rounded">
-                        <code>{apiResponse}</code>
-                        </pre>
-                    </div>
-                    <div className="">
-                      <table className="table">
-                        <tbody>
-                          <tr>
-                            <td>status</td>
-                            <td>1</td>
-                          </tr>
-                          <tr>
-                            <td>status_message</td>
-                            <td>success</td>
-                          </tr>
-                          <tr>
-                            <td>lookup_outcome</td>
-                            <td>1</td>
-                          </tr>
-                          <tr>
-                            <td>lookup_outcome_message</td>
-                            <td>success</td>
-                          </tr>
-                          <tr>
-                            <td>international_format_number</td>
-                            <td>919274884923</td>
-                          </tr>
-                          <tr>
-                            <td>international_formatted</td>
-                            <td>+91 9274884923</td>
-                          </tr>
-                          <tr>
-                            <td>national_format_number</td>
-                            <td>09274884923</td>
-                          </tr>
-                          <tr>
-                            <td>country_code</td>
-                            <td>IN</td>
-                          </tr>
-                          <tr>
-                            <td>country_name</td>
-                            <td>India</td>
-                          </tr>
-                          <tr>
-                            <td>country_prefix</td>
-                            <td>91</td>
-                          </tr>
-                          <tr>
-                            <td>current_carrier</td>
-                            <td>
-                              <div className="row">
-                                <div className="col">
-                                  <h6>network_code:</h6>
-                                  <h6>name:</h6>
-                                  <h6>country:</h6>
-                                  <h6>network_type:</h6>
-                                </div>
-                                <div className="col">
-                                  <h6>405863</h6>
-                                  <h6>Reliance Jio Infocomm Ltd (RJIL)</h6>
-                                  <h6>IN</h6>
-                                  <h6>mobile</h6>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>original_carrier</td>
-                            <td>
-                              <div className="row">
-                                <div className="col">
-                                  <h6>network_code:</h6>
-                                  <h6>name:</h6>
-                                  <h6>country:</h6>
-                                  <h6>network_type:</h6>
-                                </div>
-                                <div className="col">
-                                  <h6>405863</h6>
-                                  <h6>Reliance Jio Infocomm Ltd (RJIL)</h6>
-                                  <h6>IN</h6>
-                                  <h6>mobile</h6>
-                                </div>
-                              </div>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>valid_number</td>
-                            <td>valid</td>
-                          </tr>
-                          <tr>
-                            <td>reachable</td>
-                            <td>reachable</td>
-                          </tr>
-                          <tr>
-                            <td>ported</td>
-                            <td>assumed_not_ported</td>
-                          </tr>
-                          <tr>
-                            <td>roaming</td>
-                            <td>not_roaming</td>
-                          </tr>
-                          <tr>
-                            <td>gsm_code</td>
-                            <td>0</td>
-                          </tr>
-                          <tr>
-                            <td>gsm_message</td>
-                            <td>No error</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                )}
-              </div>
             </div>
-          </section>
-          <div className="container">
-            <section className="text-center">
-              <h1 className="m-4">Easy phone number verification</h1>
-              <div className="row">
-                {verification.map((item, index) => (
-                  <div key={index} className="col-md-4 mb-4">
-                    <div className="card p-4" style={{ minHeight: '250px' }}>
-                      <FontAwesomeIcon style={{ fontSize: '2em' }} className="mb-4" icon={iconMap[item.icon]} />
-                      <h3 className="feature-title">{item.title}</h3>
-                      <span className="feature-desc">
-                        <span>{item.subtitle}</span>
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-          </div>
         </main>
     </div>
   );
