@@ -147,7 +147,7 @@ const PhoneLookup = () => {
                         </pre>
                     </div>
                     <div className="card mt-4">
-                      <h1 className="fw-bold text-center">Result:</h1>
+                      <h1 className="fw-bold text-center">Result</h1>
                       <ul className="list-group list-group-flush custom-list-group">
                         <li className="list-group-item">
                             <span><strong>status</strong></span>
