@@ -36,8 +36,14 @@ const PhoneLookup = () => {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [apiResponse, setApiResponse] = useState('');
   const [showResult, setShowResult] = useState(false);
+  const [lookupType, setLookupType] = useState("hlr");
+
+  const handleLookupTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLookupType(e.target.value);
+  };
 
   useEffect(() => {
+
     new TomSelect('#country-select', {
       valueField: 'code',
       labelField: 'name',
@@ -55,46 +61,70 @@ const PhoneLookup = () => {
       },
       onChange: (value:any) => setCountryCode(value)
     });
+
   }, []);
 
-  const handleSearch = (e:any) => {
+  const handleSearch = async  (e:any) => {
     e.preventDefault();
-    if (!countryCode || !phoneNumber.trim()) {
+    if (!countryCode || !phoneNumber.trim() || !lookupType) {
       alert('Please select a country and enter a phone number');
       return;
     }
-
+    const formattedCountryCode = countryCode.replace('+', '');
+    const foramteNumber = formattedCountryCode + phoneNumber;
     setShowResult(true);
-    setApiResponse('Fetching API response...');
+    setApiResponse('Fetching API response...');  
+    try {
+      const apiResponse = await handleAPICall(foramteNumber,lookupType);
+      setApiResponse(JSON.stringify(apiResponse, null, 2));
+    } catch (error) {
+      setApiResponse(`Error fetching data: ${error}`);
+    }
+    
+    // setTimeout(() => {
+    //     const response = {
+    //       detected_telephone_number: `${countryCode}${phoneNumber}`,
+    //       live_status: 'LIVE',
+    //       disposable_number: 'Register to view',
+    //       ported_date: 'Register to view',
+    //       current_network_details: {
+    //         name: 'Register to view',
+    //         mccmnc: 'Register to view',
+    //         country_name: 'INdia',
+    //         country_iso3: 'INdia',
+    //         area: 'Delhi',
+    //         country_prefix: countryCode
+    //       },
+    //       original_network: 'AVAILABLE',
+    //       original_network_details: {
+    //         name: 'Reliance Jio',
+    //         mccmnc: '404',
+    //         country_name: 'INDIA',
+    //         country_iso3: 'IND',
+    //         area: 'india',
+    //         country_prefix: countryCode
+    //       },
+    //       timeStamp: '2025-02-05T06:01:23Z',
+    //       telephone_number_type: 'MOBILE'
+    //     };
+    //   setApiResponse(JSON.stringify(response, null, 2));
+    // }, 2000);
 
-    setTimeout(() => {
-        const response = {
-          detected_telephone_number: `${countryCode}${phoneNumber}`,
-          live_status: 'LIVE',
-          disposable_number: 'Register to view',
-          ported_date: 'Register to view',
-          current_network_details: {
-            name: 'Register to view',
-            mccmnc: 'Register to view',
-            country_name: 'INdia',
-            country_iso3: 'INdia',
-            area: 'Delhi',
-            country_prefix: countryCode
-          },
-          original_network: 'AVAILABLE',
-          original_network_details: {
-            name: 'Reliance Jio',
-            mccmnc: '404',
-            country_name: 'INDIA',
-            country_iso3: 'IND',
-            area: 'india',
-            country_prefix: countryCode
-          },
-          timeStamp: '2025-02-05T06:01:23Z',
-          telephone_number_type: 'MOBILE'
-        };
-      setApiResponse(JSON.stringify(response, null, 2));
-    }, 2000);
+
+  };
+  const handleAPICall = async (formattedNumber: any,lookupType:any) => {
+    const apiUrl = `/api/lookup?type=${lookupType}&number=${formattedNumber}`;
+  
+    try {
+      const response = await fetch(apiUrl);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('API call failed:', error);
+      throw error;
+    }
   };
 
   return (
@@ -125,17 +155,19 @@ const PhoneLookup = () => {
                 <p className="lead">Perform a HLR and DNCR lookup to check validity and availability of a mobile or landline number worldwide.</p>
 
                 <div className="card shadow p-4 mx-auto" >
-                  <div className="input-group">
-                      <select id="lookupType" className="input-group-text">
-                          <option value="hlr">HLR</option>
-                          <option value="dncr">DNCR</option>
-                      </select>
-                      <select id="country-select" className="input-group-text w-25">
-                          <option value="">Select Country</option>
-                      </select>
-                      <input type="number" className="form-control" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{ boxShadow: 'none', border: '1px solid #ccc' }} />
-                      <button className="btn btn-primary" onClick={handleSearch}>Search</button>
-                  </div>
+                  <form onSubmit={handleSearch} >
+                    <div className="input-group">
+                        <select  onChange={handleLookupTypeChange} id="lookupType" className="input-group-text">
+                            <option value="hlr">HLR</option>
+                            <option value="dncr">DNCR</option>
+                        </select>
+                        <select id="country-select" className="input-group-text w-25">
+                            <option value="">Select Country</option>
+                        </select>
+                        <input type="number" className="form-control" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{ boxShadow: 'none', border: '1px solid #ccc' }} />
+                        <button className="btn btn-primary" type="submit">Search</button>
+                    </div>
+                  </form>
                 </div>
 
                 {showResult && (
@@ -145,119 +177,6 @@ const PhoneLookup = () => {
                         <pre className="bg-dark text-success p-3 rounded">
                         <code>{apiResponse}</code>
                         </pre>
-                    </div>
-                    <div className="card mt-4">
-                      <h1 className="fw-bold text-center">Result</h1>
-                      <ul className="list-group list-group-flush custom-list-group">
-                        <li className="list-group-item">
-                            <span><strong>status</strong></span>
-                            <span>1</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>status_message</strong></span>
-                            <span>Success</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>lookup_outcome</strong></span>
-                            <span>1</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>lookup_outcome_message</strong></span>
-                            <span>Success</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>international_format_number</strong></span>
-                            <span>919274884923</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>international_formatted</strong></span>
-                            <span>+91 9274884923</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>national_format_number</strong></span>
-                            <span>09274884923</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>country_code</strong></span>
-                            <span>IN</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>country_name</strong></span>
-                            <span>India</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>country_prefix</strong></span>
-                            <span>91</span>
-                        </li>
-                        <li className="list-group-item">
-                            <ul className='nav flex-column'>
-                              <li className="nav-item"><strong>network_code:</strong></li>
-                              <li className="nav-item"><strong>name:</strong></li>
-                              <li className="nav-item"><strong>country:</strong></li>
-                              <li className="nav-item"><strong>network_type:</strong></li>
-                              <li className="nav-item"><strong>network_code:</strong></li>
-                              <li className="nav-item"><strong>name:</strong></li>
-                              <li className="nav-item"><strong>country:</strong></li>
-                              <li className="nav-item"><strong>network_type:</strong></li>
-                            </ul>
-                            <ul className='nav flex-column'>
-                              <li className="nav-item">405863</li>
-                              <li className="nav-item">Reliance Jio Infocomm Ltd (RJIL)</li>
-                              <li className="nav-item">IN</li>
-                              <li className="nav-item">mobile</li>
-                              <li className="nav-item">405863</li>
-                              <li className="nav-item">Reliance Jio Infocomm Ltd (RJIL)</li>
-                              <li className="nav-item">IN</li>
-                              <li className="nav-item">mobile</li>
-                            </ul>
-                        </li>
-                        <li className="list-group-item">
-                            <ul className='nav flex-column'>
-                            <li className="nav-item"><strong>network_code:</strong></li>
-                              <li className="nav-item"><strong>name:</strong></li>
-                              <li className="nav-item"><strong>country:</strong></li>
-                              <li className="nav-item"><strong>network_type:</strong></li>
-                              <li className="nav-item"><strong>network_code:</strong></li>
-                              <li className="nav-item"><strong>name:</strong></li>
-                              <li className="nav-item"><strong>country:</strong></li>
-                              <li className="nav-item"><strong>network_type:</strong></li>
-                            </ul>
-                            <ul className='nav flex-column'>
-                              <li className="nav-item">405863</li>
-                              <li className="nav-item">Reliance Jio Infocomm Ltd (RJIL)</li>
-                              <li className="nav-item">IN</li>
-                              <li className="nav-item">mobile</li>
-                              <li className="nav-item">405863</li>
-                              <li className="nav-item">Reliance Jio Infocomm Ltd (RJIL)</li>
-                              <li className="nav-item">IN</li>
-                              <li className="nav-item">mobile</li>
-                            </ul>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>valid_number</strong></span>
-                            <span>Valid</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>reachable</strong></span>
-                            <span>Reachable</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>ported</strong></span>
-                            <span>Assumed Not Ported</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>roaming</strong></span>
-                            <span>Not Roaming</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>gsm_code</strong></span>
-                            <span>0</span>
-                        </li>
-                        <li className="list-group-item">
-                            <span><strong>gsm_message</strong></span>
-                            <span>No Error</span>
-                        </li>
-                      </ul>
                     </div>
                   </div>
                 )}
