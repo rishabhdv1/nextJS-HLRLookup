@@ -113,10 +113,7 @@ const PhoneLookup = () => {
                     <form className="d-flex ms-auto">
                       <ul className="nav nav-pills">
                         <li className="nav-item me-2">
-                          <a className="nav-link bg-primary text-white" aria-current="page" href="https://oceanpbx.club/">Sign Up</a>
-                        </li>
-                        <li className="nav-item">
-                          <a className="nav-link bg-primary text-white" href="https://oceanpbx.club/">Login</a>
+                          <a className="nav-link bg-primary text-white" aria-current="page" href="https://oceanpbx.club/store/dnrc-check" target="_blank">Buy Now</a>
                         </li>
                       </ul>
                     </form>
@@ -181,6 +178,31 @@ const PhoneLookup = () => {
                 ))}
               </div>
             </section>
+            {/* <section className="text-center">
+              <h3>Our Globle Network Partner</h3>
+              <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
+                <div className="carousel-inner">
+                  <div className="carousel-item active">
+                    <img src="https://www.hlrlookup.com/storage/sprint.jpg" className="d-block w-100" alt="..." />
+                  </div>
+                  <div className="carousel-item">
+                    <img src="https://www.hlrlookup.com/storage/three.jpg" className="d-block w-100" alt="..." />
+                  </div>
+                  <div className="carousel-item">
+                    <img src="..." className="d-block w-100" alt="..." />
+                  </div>
+                </div>
+                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                  <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span className="visually-hidden">Previous</span>
+                </button>
+                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                  <span className="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span className="visually-hidden">Next</span>
+                </button>
+              </div>
+              <h3>Our Clients</h3>
+            </section> */}
           </div>
         </main>
         <footer>
