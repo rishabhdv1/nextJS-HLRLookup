@@ -138,7 +138,7 @@ const PhoneLookup = () => {
                         <select id="country-select" className="input-group-text w-25">
                             <option value="">Select Country</option>
                         </select>
-                        <input type="number" className="form-control" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{ boxShadow: 'none', border: '1px solid #ccc' }} />
+                        <input type="text" className="form-control" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{ boxShadow: 'none', border: '1px solid #ccc' }} />
                         <button className="btn btn-primary" type="submit">Search</button>
                     </div>
                   </form>
