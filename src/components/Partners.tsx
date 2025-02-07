@@ -27,7 +27,7 @@ const clients = [
 export default function Partners() {
   return (
     <section className="container mx-auto p-5 text-center">
-      <h3 className="mb-5">Our Globle Network Partner</h3>
+      <h3 className="mb-5">Our Globle Network Partner </h3>
       <Swiper
         slidesPerView={1}
         breakpoints={{
