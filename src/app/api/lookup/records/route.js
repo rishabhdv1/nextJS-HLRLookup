@@ -109,7 +109,7 @@ const addReportRecord = async (authKey, lookupType, msisdn, charge, currency) =>
       return result.insertId;  // Return the inserted ID or true if successful
   } catch (error) {
       console.error("Error adding report record:", error);
-      return error;
+      return false;
   }
 };
 
@@ -236,10 +236,6 @@ export async function POST(request) {
 
       // Add report record
       const reportAdded = await addReportRecord(token, type, number, chargeAmount, 'usd');
-      return new Response(
-        JSON.stringify({ error: reportAdded }),
-        { status: 500 }
-    );
       if (!reportAdded) {
           return new Response(
               JSON.stringify({ error: "Failed to add report record." }),
