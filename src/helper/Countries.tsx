@@ -70,7 +70,7 @@ const countries = [
     { code: '+679', name: 'Fiji', flagUrl: 'https://flagcdn.com/w40/fj.png' },
     { code: '+358', name: 'Finland', flagUrl: 'https://flagcdn.com/w40/fi.png' },
     { code: '+33', name: 'France', flagUrl: 'https://flagcdn.com/w40/fr.png' },
-    { code: '+', name: 'French Polynesia', flagUrl: 'https://flagcdn.com/w40/pf.png' },
+    // { code: '+', name: 'French Polynesia', flagUrl: 'https://flagcdn.com/w40/pf.png' },
     // { code: '+', name: 'Gabon', flagUrl: 'https://flagcdn.com/w40/ga.png' },
     // { code: '+', name: 'Gambia', flagUrl: 'https://flagcdn.com/w40/gm.png' },
     // { code: '+', name: 'Georgia', flagUrl: 'https://flagcdn.com/w40/ge.png' },
