@@ -117,3 +117,6 @@ p {
 .sSlide > div {
   cursor: grab !important;
 }
+h3 {
+  color: #2563EB !important;
+}
