@@ -1,13 +1,16 @@
 'use client';
 
+import "bootstrap/dist/js/bootstrap.bundle.min";
+
 import { useState, useEffect } from 'react';
 import TomSelect from 'tom-select';
 import 'tom-select/dist/css/tom-select.default.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import countries from '@/helper/Countries';
-import { timeStamp } from 'console';
+import { log, timeStamp } from 'console';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCheckCircle, faChevronCircleLeft, faChevronCircleRight, faDesktop, faGlobe, faPhone, faShield, faStopwatch, faTicket, faTty } from '@fortawesome/free-solid-svg-icons';
+import Partners from "./Partners";
 const iconMap: Record<string, any> = {
   phone: faPhone,
   desktop: faDesktop,
@@ -32,17 +35,40 @@ const verification = [
 ];
 
 const PhoneLookup = () => {
+  //1 Hook Variabe area
   const [countryCode, setCountryCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [apiResponse, setApiResponse] = useState('');
   const [showResult, setShowResult] = useState(false);
   const [lookupType, setLookupType] = useState("hlr");
+  const [pricingData, setPricingData] = useState([]);
 
+  //2. Function defination area
   const handleLookupTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setLookupType(e.target.value);
   };
 
   useEffect(() => {
+    const fetchPricingData = async () => {
+      try {
+        const response = await fetch('/api/getpricing');
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log("data >>", data.res);
+        
+
+        setPricingData(data.res);
+      } catch (error) {
+        console.error("Error fetching pricing data:", error);
+      }
+    };
+    fetchPricingData();
+  }, []);
+
+  useEffect(() => { // PageReload
 
     new TomSelect('#country-select', {
       valueField: 'code',
@@ -109,27 +135,28 @@ const PhoneLookup = () => {
     }
   };
 
+  const scrollToPricing = () => {
+    const pricingSection = document.getElementById("pricing-section");
+    if (pricingSection) {
+      pricingSection.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+
+  //3. Retrurn statement
   return (
     <div style={{ height: '100vh' }}>
-        <header style={{ height: '10vh' }}>
-            <nav className="navbar navbar-expand-lg navbar-light">
-                <div className="container">
-                    <a className="navbar-brand" href="https://oceanpbx.club/">
-                        <img className="img-fluid w-25" src="https://oceanpbx.club/assets/img/logo.png" alt="" />
-                    </a>
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
-                    <div className="collapse navbar-collapse" id="navbarContent">
-                    <form className="d-flex ms-auto">
-                      <ul className="nav nav-pills">
-                        <li className="nav-item me-2">
-                          <a className="nav-link bg-primary text-white" aria-current="page" href="https://oceanpbx.club/store/dnrc-check" target="_blank">Buy Now</a>
-                        </li>
-                      </ul>
-                    </form>
-                    </div>
-                </div>
+        <header className="bg-white">
+            <nav className="navbar">
+              <div className="container">
+                <a className="navbar-brand">
+                  <img className="img-fluid custom-logo" src="https://oceanpbx.club/assets/img/logo.png" alt="" />
+                </a>
+                <form className="d-flex">
+                  <button type="button" className="btn btn-outline-primary me-2" onClick={scrollToPricing}>Pricing</button>
+                  <a href="https://oceanpbx.club/store/dnrc-check" target="_blank" className="btn btn-primary">Buy Now</a>
+                </form>
+              </div>
             </nav>
         </header>
         <main>
@@ -141,7 +168,7 @@ const PhoneLookup = () => {
 
                 <div className="card shadow p-4 mx-auto" >
                   <form onSubmit={handleSearch} >
-                    <div className="input-group">
+                    {/* <div className="input-group">
                         <select  onChange={handleLookupTypeChange} id="lookupType" className="input-group-text">
                             <option value="hlr">HLR</option>
                             <option value="dncr">DNCR</option>
@@ -151,6 +178,25 @@ const PhoneLookup = () => {
                         </select>
                         <input type="text" className="form-control" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{ boxShadow: 'none', border: '1px solid #ccc' }} />
                         <button className="btn btn-primary" type="submit">Search</button>
+                    </div> */}
+                    <div className="row align-items-center">
+                      <div className="col-sm-12 col-lg-2 mb-2">
+                        <select onChange={handleLookupTypeChange} id="lookupType" className="form-control">
+                            <option value="hlr">HLR</option>
+                            <option value="dncr">DNCR</option>
+                        </select>
+                      </div>
+                      <div className="col-sm-12 col-lg-4 mb-2">
+                        <select id="country-select" className="form-control">
+                            <option value="">Select Country</option>
+                        </select>
+                      </div>
+                      <div className="col-sm-12 col-lg-5 mb-2">
+                        <input type="text" className="form-control" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{ boxShadow: 'none', border: '1px solid #ccc' }} />
+                      </div>
+                      <div className="col-sm-12 col-lg-1 mb-2">
+                        <button className="btn btn-primary w-100" type="submit">Search</button>
+                      </div>
                     </div>
                   </form>
                 </div>
@@ -169,9 +215,11 @@ const PhoneLookup = () => {
             </div>
           </section>
           <div className="container">
-            <section  className="mt-5">
-              <h1 className="m-4 text-center" >How HLR/DNCR Work ? </h1>
-              <iframe src="https://www.hlr-lookups.com/videos/hlr-lookups.webm" style={{ width: '100%', height: '100vh', border: 'none' }}></iframe>
+            <section className="mt-5 m-0">
+              <h1 className="m-4 text-center">How HLR/DNCR Work?</h1>
+              <div className="video-container">
+                <iframe src="https://www.hlr-lookups.com/videos/hlr-lookups.webm" allowFullScreen ></iframe>
+              </div>
             </section>
             <section className="text-center mb-4">
               <h1 className="m-4">Easy phone number verification</h1>
@@ -189,31 +237,37 @@ const PhoneLookup = () => {
                 ))}
               </div>
             </section>
-            {/* <section className="text-center">
-              <h3>Our Globle Network Partner</h3>
-              <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
-                <div className="carousel-inner">
-                  <div className="carousel-item active">
-                    <img src="https://www.hlrlookup.com/storage/sprint.jpg" className="d-block w-100" alt="..." />
-                  </div>
-                  <div className="carousel-item">
-                    <img src="https://www.hlrlookup.com/storage/three.jpg" className="d-block w-100" alt="..." />
-                  </div>
-                  <div className="carousel-item">
-                    <img src="..." className="d-block w-100" alt="..." />
-                  </div>
-                </div>
-                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
-                  <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                  <span className="visually-hidden">Previous</span>
-                </button>
-                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
-                  <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                  <span className="visually-hidden">Next</span>
-                </button>
+            <section id="pricing-section">
+              <h1 className="m-4 text-center" >Our Pricing</h1>
+              <div className="table-responsive">
+                <table className="table table-striped fa-check text-successtable-border border-light">
+                  <thead className="border-light">
+                    <tr>
+                      <th scope="col">Lower Bound</th>
+                      <th scope="col"><strong>Upper Bound</strong></th>
+                      <th scope="col"><strong>HLR Lookups</strong></th>
+                      <th scope="col"><strong>DNCR Lookups</strong></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    { pricingData && pricingData.map((row:any, index:any) => (
+                      <tr key={index}>
+                        <th scope="row">{row.lowerBound}</th>
+                        <td>{row.upperBound}</td>
+                        <td>{row.hlrLookup}</td>
+                        <td>{row.dncrLookup}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
-              <h3>Our Clients</h3>
-            </section> */}
+            </section>
+            <section className="text-center">
+              <Partners />
+              {/* <h3>Our Globle Network Partner</h3>
+              
+              <h3>Our Clients</h3> */}
+            </section>
           </div>
         </main>
         <footer>
