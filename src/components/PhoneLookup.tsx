@@ -263,7 +263,7 @@ const PhoneLookup = () => {
               </div>
             </section>
             <section className="text-center">
-             
+             <Partners />
             </section>
           </div>
         </main>
