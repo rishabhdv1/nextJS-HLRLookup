@@ -32,6 +32,12 @@ const dbConfig = {
   },
   // Add more countries and their configurations dynamically here
 };
+const dbConfigMain = {
+    host: "mysql-service-main",
+    user: "lookup_user",
+    password: "lookup_password",
+    database: "lookup_main",
+};
 
 // Function to determine the country from the phone number
 const determineCountry = (number) => {
@@ -43,13 +49,15 @@ const determineCountry = (number) => {
 // Function to get the database configuration based on the country
 const getDatabaseConfig = (country) => dbConfig[country] || null;
 
+
 // Handler for the GET request
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const type = searchParams.get("type");
   const number = searchParams.get("number");
+  const ipadd = searchParams.get("ipadd");
   const token = request.headers.get("Authorization");
-  const user = validateToken(token?.replace("Bearer ", "")); // Extract token and validate
+  const user = validateToken(token?.replace("Bearer ", "")); 
   if (!user) {
     return new Response(
       JSON.stringify({ error: "Unauthorized: Invalid or missing token" }),
@@ -70,6 +78,35 @@ export async function GET(request) {
   //     { status: 200 }
   //   );
   // }
+
+
+    const connectionFist = await mysql.createConnection(dbConfigMain);
+    const isBlocked = 1;
+    const [rows] = await connectionFist.execute(
+      "SELECT is_blocked FROM ip_tbl WHERE ip_addpress = ? AND is_blocked = ?",
+      [ipadd, isBlocked]
+    );
+
+    if (rows.length > 0) {
+      return new Response(
+        JSON.stringify({
+          message: `IP ${ipadd} is already ${isBlocked ? "blocked" : "allowed"}.`
+        }),
+        { status: 200 }
+      );
+    }
+
+    // Ensure IP is unique & update if exists
+    const query = `
+      INSERT INTO ip_tbl (ip_addpress, is_blocked) 
+      VALUES (?, ?)
+      ON DUPLICATE KEY UPDATE is_blocked = ?;
+    `;
+
+    const [result] = await connectionFist.execute(query, [ipadd, isBlocked, isBlocked]);
+    await connectionFist.end();
+
+
 
   try {
     const country = determineCountry(number);

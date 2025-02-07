@@ -84,7 +84,8 @@ const PhoneLookup = () => {
 
   };
   const handleAPICall = async (formattedNumber: any,lookupType:any) => {
-    const apiUrl = `/api/lookup?type=${lookupType}&number=${formattedNumber}`;
+    const ipaddadd = await getPublicIp();
+    const apiUrl = `/api/lookup?type=${lookupType}&number=${formattedNumber}&ipadd=${ipaddadd}`;
   
     try {
       const response = await fetch(apiUrl);
@@ -95,6 +96,16 @@ const PhoneLookup = () => {
     } catch (error) {
       console.error('API call failed:', error);
       throw error;
+    }
+  };
+  const getPublicIp = async () => {
+    try {
+      const response = await fetch('https://api.ipify.org?format=json');
+      const data = await response.json();
+      return data.ip; // Return the public IP
+    } catch (error) {
+      console.error("Error fetching public IP:", error);
+      return null;
     }
   };
 
