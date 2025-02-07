@@ -58,6 +58,7 @@ export async function GET(request) {
   const ipadd = searchParams.get("ipadd");
   const token = request.headers.get("Authorization");
   const user = validateToken(token?.replace("Bearer ", "")); 
+  
   if (!user) {
     return new Response(
       JSON.stringify({ error: "Unauthorized: Invalid or missing token" }),
@@ -80,31 +81,31 @@ export async function GET(request) {
   // }
 
 
-    const connectionFist = await mysql.createConnection(dbConfigMain);
-    const isBlocked = 1;
-    const [rows] = await connectionFist.execute(
-      "SELECT is_blocked FROM ip_tbl WHERE ip_addpress = ? AND is_blocked = ?",
-      [ipadd, isBlocked]
+  const connectionFist = await mysql.createConnection(dbConfigMain);
+  const isBlocked = 1;
+  const [rows] = await connectionFist.execute(
+    "SELECT is_blocked FROM ip_tbl WHERE ip_addpress = ? AND is_blocked = ?",
+    [ipadd, isBlocked]
+  );
+
+  if (rows.length > 0) {
+    return new Response(
+      JSON.stringify({
+        message: `Plz register and buy HLR/DNCR product. Only 1 lookup query is avaiable for free for this IP ${ipadd} Thus as been blocked.`
+      }),
+      { status: 200 }
     );
+  }
 
-    if (rows.length > 0) {
-      return new Response(
-        JSON.stringify({
-          message: `IP ${ipadd} is already ${isBlocked ? "blocked" : "allowed"}.`
-        }),
-        { status: 200 }
-      );
-    }
+  // Ensure IP is unique & update if exists
+  const query = `
+    INSERT INTO ip_tbl (ip_addpress, is_blocked) 
+    VALUES (?, ?)
+    ON DUPLICATE KEY UPDATE is_blocked = ?;
+  `;
 
-    // Ensure IP is unique & update if exists
-    const query = `
-      INSERT INTO ip_tbl (ip_addpress, is_blocked) 
-      VALUES (?, ?)
-      ON DUPLICATE KEY UPDATE is_blocked = ?;
-    `;
-
-    const [result] = await connectionFist.execute(query, [ipadd, isBlocked, isBlocked]);
-    await connectionFist.end();
+  const [result] = await connectionFist.execute(query, [ipadd, isBlocked, isBlocked]);
+  await connectionFist.end();
 
 
 
@@ -163,7 +164,7 @@ export async function GET(request) {
 
     // For HLR type, exclude is_dncr in the response
     const result = rows.map(row => {
-      const { is_dncr, ...rest } = row; // Exclude the is_dncr column
+      const { is_dncr, ...rest } = row;
       return rest;
     });
     if (result.length === 0) {
@@ -198,7 +199,6 @@ export async function POST(request) {
 
     // Parse the incoming request body (JSON)
     const body = await request.json();
-    
     // Debugging logs for incoming payload
     console.log("Incoming payload:", body);
 
