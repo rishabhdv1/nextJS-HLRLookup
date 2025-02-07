@@ -5,6 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { useEffect, useState } from "react";
 
 const partners = [
   { id: 1, logo: "https://www.hlrlookup.com/storage/sprint.jpg" },
@@ -25,6 +26,16 @@ const clients = [
 ];
 
 export default function Partners() {
+    const [startClientCarousel, setStartClientCarousel] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setStartClientCarousel(true);
+        }, 2000);
+
+        return () => clearTimeout(timer);
+    }, []);
+
   return (
     <section className="container mx-auto p-5 text-center user-select-none">
       <h3 className="mb-5">Our Globle Network Partner</h3>
@@ -51,43 +62,39 @@ export default function Partners() {
       </Swiper>
       
       {/* <h3 className="mt-5">Our Clients</h3> */}
-      <div className="card">
-        <div className="card-header">
-            <h3 className="">Our Clients</h3>
-        </div>
-        <div className="card-body">
-            <Swiper
-                slidesPerView={1}
-                breakpoints={{
-                640: { slidesPerView: 2 },
-                1024: { slidesPerView: 3 },
-                }}
-                spaceBetween={30}
-                autoplay={{ delay: 3000, disableOnInteraction: false }}
-                loop={true}
-                pagination={{ clickable: true }}
-                navigation={false}
-                modules={[Autoplay, Pagination, Navigation]}
-                className="w-full"
-            >
-                {clients.map((clients) => (
-                <SwiperSlide key={clients.id} className="sSlide flex justify-center">
-                    <div className="p-4 bg-white d-flex align-content-between flex-wrap" style={{ minHeight: "300px" }}>
-                        <span className="">{clients.testimonial}</span><br/>
-                        <div className="row align-items-center">
-                            <div className="col-2">
-                                <img src={clients.image} alt={clients.name} className="img-fluid rounded-5" />
-                            </div>
-                            <div className="col-10">
-                                <h5 className="mt-2 text-start">{clients.name}</h5>
-                            </div>
+    <h3 className="mt-5">Our Clients</h3>
+    {startClientCarousel && (
+        <Swiper
+            slidesPerView={1}
+            breakpoints={{
+            640: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+            }}
+            spaceBetween={30}
+            autoplay={{ delay: 3000, disableOnInteraction: false }}
+            loop={true}
+            pagination={{ clickable: true }}
+            navigation={false}
+            modules={[Autoplay, Pagination, Navigation]}
+            className="w-full"
+        >
+            {clients.map((clients) => (
+            <SwiperSlide key={clients.id} className="sSlide flex justify-center">
+                <div className="p-4 bg-white d-flex align-content-between flex-wrap" style={{ minHeight: "300px" }}>
+                    <span className="">{clients.testimonial}</span><br/>
+                    <div className="row align-items-center">
+                        <div className="col-2">
+                            <img src={clients.image} alt={clients.name} className="img-fluid rounded-5" />
+                        </div>
+                        <div className="col-10">
+                            <h5 className="mt-2 text-start">{clients.name}</h5>
                         </div>
                     </div>
-                </SwiperSlide>
-                ))}
-            </Swiper>
-        </div>
-      </div>
+                </div>
+            </SwiperSlide>
+            ))}
+        </Swiper>
+    )}
     </section>
   );
 }

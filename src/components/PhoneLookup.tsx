@@ -216,13 +216,13 @@ const PhoneLookup = () => {
           </section>
           <div className="container">
             <section className="mt-5 m-0">
-              <h1 className="m-4 text-center">How HLR/DNCR Work?</h1>
+              <h3 className="m-4 text-center">How HLR/DNCR Work?</h3>
               <div className="video-container">
                 <iframe src="https://www.hlr-lookups.com/videos/hlr-lookups.webm" allowFullScreen ></iframe>
               </div>
             </section>
             <section className="text-center mb-4">
-              <h1 className="m-4">Easy phone number verification</h1>
+              <h3 className="m-4">Easy phone number verification</h3>
               <div className="row">
                 {verification.map((item, index) => (
                   <div key={index} className="col-md-4 mb-4">
@@ -238,7 +238,7 @@ const PhoneLookup = () => {
               </div>
             </section>
             <section id="pricing-section">
-              <h1 className="m-4 text-center" >Our Pricing</h1>
+              <h3 className="m-4 text-center" >Our Pricing</h3>
               <div className="table-responsive">
                 <table className="table table-striped fa-check text-successtable-border border-light">
                   <thead className="border-light">
@@ -270,13 +270,13 @@ const PhoneLookup = () => {
         <footer>
           <nav className="navbar navbar-expand-lg border-top">
             <div className="container">
-              <div className="row ">
+              <div className="row w-100 text-center text-md-start align-items-center">
                 <div className="col-md-8">
                   <a className="navbar-brand" href="https://oceanpbx.club/">
                     <img className="img-fluid w-25" src="https://oceanpbx.club/assets/img/logo.png" alt="" />
                   </a>
                 </div>
-                <div className="col-md-4 text-end">
+                <div className="col-12 col-md-4 text-md-end">
                   <span className="d-block mt-2 ">Copyright © 2025 OceanPBX. All Rights Reserved.</span>
                 </div>
               </div>
