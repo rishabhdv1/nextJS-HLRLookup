@@ -111,3 +111,9 @@ p {
   height: 100%;
   border: none;
 }
+.ts-wrapper.form-control.single {
+  padding: 0px;
+}
+.sSlide > div {
+  cursor: grab !important;
+}

@@ -149,7 +149,7 @@ const PhoneLookup = () => {
         <header className="bg-white">
             <nav className="navbar">
               <div className="container">
-                <a className="navbar-brand">
+                <a href="https://oceanpbx.club/" target="_blank" className="navbar-brand">
                   <img className="img-fluid custom-logo" src="https://oceanpbx.club/assets/img/logo.png" alt="" />
                 </a>
                 <form className="d-flex">

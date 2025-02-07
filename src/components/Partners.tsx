@@ -26,7 +26,7 @@ const clients = [
 
 export default function Partners() {
   return (
-    <section className="container mx-auto p-5 text-center">
+    <section className="container mx-auto p-5 text-center user-select-none">
       <h3 className="mb-5">Our Globle Network Partner </h3>
       <Swiper
         slidesPerView={1}
@@ -37,13 +37,12 @@ export default function Partners() {
         }}
         spaceBetween={30}
         autoplay={{ delay: 3000, disableOnInteraction: false }}
-        pagination={{ clickable: true }}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
+        loop={true}
+        modules={[Autoplay]}
         className="w-full"
       >
         {partners.map((partner) => (
-          <SwiperSlide key={partner.id} className="flex justify-center">
+          <SwiperSlide key={partner.id} className="sSlide flex justify-center">
             <div className="p-4 bg-white rounded-lg">
               <img src={partner.logo} className="w-40 h-40 object-contain mx-auto" />
             </div>
@@ -51,36 +50,44 @@ export default function Partners() {
         ))}
       </Swiper>
       
-      <h3 className="mb-5 mt-5">Our Clients</h3>
-      <Swiper
-        slidesPerView={1}
-        breakpoints={{
-          640: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-        }}
-        spaceBetween={30}
-        autoplay={{ delay: 3000, disableOnInteraction: false }}
-        pagination={{ clickable: true }}
-        navigation={true}
-        modules={[Autoplay, Pagination, Navigation]}
-        className="w-full"
-      >
-        {clients.map((clients) => (
-          <SwiperSlide key={clients.id} className="flex justify-center">
-            <div className="p-4 bg-white rounded-lg shadow-lg">
-                <span className="">{clients.testimonial}</span><br/>
-                <div className="row">
-                    <div className="col-2">
-                        <img src={clients.image} alt={clients.name} className="object-contain mx-auto" width={50} />
+      {/* <h3 className="mt-5">Our Clients</h3> */}
+      <div className="card">
+        <div className="card-header">
+            <h3 className="">Our Clients</h3>
+        </div>
+        <div className="card-body">
+            <Swiper
+                slidesPerView={1}
+                breakpoints={{
+                640: { slidesPerView: 2 },
+                1024: { slidesPerView: 3 },
+                }}
+                spaceBetween={30}
+                autoplay={{ delay: 3000, disableOnInteraction: false }}
+                loop={true}
+                pagination={{ clickable: true }}
+                navigation={false}
+                modules={[Autoplay, Pagination, Navigation]}
+                className="w-full"
+            >
+                {clients.map((clients) => (
+                <SwiperSlide key={clients.id} className="sSlide flex justify-center">
+                    <div className="p-4 bg-white d-flex align-content-between flex-wrap" style={{ minHeight: "300px" }}>
+                        <span className="">{clients.testimonial}</span><br/>
+                        <div className="row align-items-center">
+                            <div className="col-2">
+                                <img src={clients.image} alt={clients.name} className="img-fluid rounded-5" />
+                            </div>
+                            <div className="col-10">
+                                <h5 className="mt-2 text-start">{clients.name}</h5>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col-10">
-                        <h5 className="mt-2">{clients.name}</h5>
-                    </div>
-                </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+                </SwiperSlide>
+                ))}
+            </Swiper>
+        </div>
+      </div>
     </section>
   );
 }
