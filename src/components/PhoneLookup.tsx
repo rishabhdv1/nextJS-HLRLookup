@@ -263,10 +263,7 @@ const PhoneLookup = () => {
               </div>
             </section>
             <section className="text-center">
-              <Partners />
-              {/* <h3>Our Globle Network Partner</h3>
-              
-              <h3>Our Clients</h3> */}
+             
             </section>
           </div>
         </main>

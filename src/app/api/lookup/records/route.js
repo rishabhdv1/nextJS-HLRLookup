@@ -59,28 +59,66 @@ const validateTokenAndBalance = async (token) => {
     }
 };
 const deductBalance = async (token, amount) => {
-    try {
+  try {
       const connection = await mysql.createConnection(dbConfigMain);
       const [result] = await connection.execute(
-        "UPDATE users SET balance = balance - ? WHERE authKey = ? AND balance >= ?",
-        [amount, token, amount]
+          `UPDATE users 
+           SET balance = balance - ?, 
+               lookup_counter = lookup_counter + 1 
+           WHERE authKey = ? 
+           AND balance >= ?`,
+          [amount, token, amount]
       );
       await connection.end();
-  
-      return result.affectedRows > 0; // Returns true if balance was deducted
-    } catch (error) {
+
+      return result.affectedRows > 0; 
+  } catch (error) {
       console.error("Error updating balance:", error);
       return false;
-    }
+  }
+};
+
+
+const getLookupCharge = async (lookupCounter, type) => {
+  try {
+      const connection = await mysql.createConnection(dbConfigMain);
+      const [rows] = await connection.execute(
+          "SELECT per_hlrlookup_charge, per_dncrlookup_charge FROM lookup_pricing WHERE ? BETWEEN lower_bound AND upper_bound",
+          [lookupCounter]
+      );
+      await connection.end();
+
+      if (rows.length > 0) {
+          return type === "dncr" ? parseFloat(rows[0].per_dncrlookup_charge) : parseFloat(rows[0].per_hlrlookup_charge);
+      } 
+      return null; // If no matching pricing is found
+  } catch (error) {
+      console.error("Error fetching lookup charge:", error);
+      return null;
+  }
+};
+const addReportRecord = async (authKey, lookupType, msisdn, charge, currency) => {
+  try {
+      const connection = await mysql.createConnection(dbConfigMain);
+      const [result] = await connection.execute(
+          `INSERT INTO reports (authkey, lookup_type, msisdn, charge, currency, createdAt, updatedAt) 
+           VALUES (?, ?, ?, ?, ?, NOW(), NOW())`,
+          [authKey, lookupType, msisdn, charge, currency]
+      );
+      await connection.end();
+      return result.insertId;  // Return the inserted ID or true if successful
+  } catch (error) {
+      console.error("Error adding report record:", error);
+      return error;
+  }
 };
 
 const determineCountry = (number) => {
   const phoneNumber = parsePhoneNumberFromString(`+${number}`); // Automatically detect the country code
   if (!phoneNumber || !phoneNumber.isValid()) return null;
-  return phoneNumber.country; // Returns country code like "IN", "GB", etc.
+  return phoneNumber.country; 
 };
 
-// Function to get the database configuration based on the country
 const getDatabaseConfig = (country) => dbConfig[country] || null;
 
 
@@ -147,12 +185,31 @@ export async function POST(request) {
         }
 
         const [rows] = await connection.execute(query, [number]);
-        await connection.end();
+
+        const connection2 = await mysql.createConnection(dbConfigMain);
+        const [userRows] = await connection2.execute(
+          "SELECT lookup_counter FROM users WHERE authKey = ?",
+            [token]
+        );
+
+        if (userRows.length === 0) {
+            await connection2.end();
+            return new Response(JSON.stringify({ error: "User not found" }), { status: 404 });
+        }
+
+        const lookupCounter = userRows[0].lookup_counter;
+        const chargeAmount = await getLookupCharge(lookupCounter, type);
+
+        if (chargeAmount === null) {
+            await connection.end();
+            return new Response(JSON.stringify({ error: "Pricing not found" }), { status: 400 });
+        }
+
 
         // Handle response based on the query type
         if (type === "dncr") {
             const result = rows.length > 0 ? { msisdn: rows[0].msisdn, dncr: rows[0].is_dncr === 1 } : null;
-            await deductBalance(token, 0.05);
+            await deductBalance(token, chargeAmount);
             return new Response(JSON.stringify({ country, data: result }), { status: 200 });
         }
 
@@ -167,16 +224,35 @@ export async function POST(request) {
                 { status: 200 }
             );
         }
+        // Deduct balance
+        const balanceDeducted = await deductBalance(token, chargeAmount);
 
-        // Deduct 0.05 after successful lookup
-        await deductBalance(token, 0.05);
+        if (!balanceDeducted) {
+          return new Response(
+              JSON.stringify({ error: "Failed to deduct balance, possibly insufficient funds." }),
+              { status: 403 }
+          );
+      }
+
+      // Add report record
+      const reportAdded = await addReportRecord(token, type, number, chargeAmount, 'usd');
+      return new Response(
+        JSON.stringify({ error: reportAdded }),
+        { status: 500 }
+    );
+      if (!reportAdded) {
+          return new Response(
+              JSON.stringify({ error: "Failed to add report record." }),
+              { status: 500 }
+          );
+      }
 
         return new Response(JSON.stringify({ country, data: result }), { status: 200 });
 
   } catch (error) {
     console.error("Error:", error);
     return new Response(
-      JSON.stringify({ error: "An error occurred while processing the request" }),
+      JSON.stringify({ error: error }),
       { status: 500 }
     );
   }

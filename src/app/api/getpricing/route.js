@@ -1,15 +1,40 @@
+import mysql from "mysql2/promise";
 
-export function GET(request) {
-    const res = [
-        { lowerBound: "1", upperBound: "1,000,000", hlrLookup: "0.010 EUR", dncrLookup: "0.0050 EUR" },
-        { lowerBound: "1,000,001", upperBound: "2,500,000", hlrLookup: "0.009 EUR", dncrLookup: "0.0045 EUR" },
-        { lowerBound: "2,500,001", upperBound: "5,000,000", hlrLookup: "0.008 EUR", dncrLookup: "0.0040 EUR" },
-        { lowerBound: "5,000,001", upperBound: "7,500,000", hlrLookup: "0.007 EUR", dncrLookup: "0.0035 EUR" },
-        { lowerBound: "7,500,001", upperBound: "10,000,000", hlrLookup: "0.006 EUR", dncrLookup: "0.0030 EUR" },
-        { lowerBound: "10,000,001", upperBound: "or more", hlrLookup: "0.005 EUR", dncrLookup: "0.0025 EUR" },
-    ];
-    return Response.json({ res }, {
-        status: 200,  // Use 201 (Created) or another valid status
-        headers: { "Content-Type": "application/json" },
-    });
+const dbConfigMain = {
+    host: "mysql-service-main",
+    user: "lookup_user",
+    password: "lookup_password",
+    database: "lookup_main",
+};
+
+export async function GET(request) {
+    const connectionFirst = await mysql.createConnection(dbConfigMain);
+    const [rows] = await connectionFirst.execute("SELECT * FROM lookup_pricing");
+
+    await connectionFirst.end(); // Close the connection after fetching data
+
+    if (rows.length === 0) {
+        return new Response(
+            JSON.stringify({
+                message: `Plz register and buy HLR/DNCR product. Only 1 lookup query is available for free for this IP ${ipadd}. Thus, it has been blocked.`,
+            }),
+            { status: 200 }
+        );
+    }
+
+    // Format the database response to match the expected output
+    const res = rows.map(row => ({
+        lowerBound: row.lower_bound.toString(),
+        upperBound: row.upper_bound.toString(),
+        hlrLookup: `${parseFloat(row.per_hlrlookup_charge).toFixed(3)} ${row.per_hrllookup_currency.toUpperCase()}`,
+        dncrLookup: `${parseFloat(row.per_dncrlookup_charge).toFixed(4)} ${row.per_dncrlookup_currency.toUpperCase()}`
+    }));
+
+    return new Response(
+        JSON.stringify({ res }),
+        {
+            status: 200,
+            headers: { "Content-Type": "application/json" },
+        }
+    );
 }
