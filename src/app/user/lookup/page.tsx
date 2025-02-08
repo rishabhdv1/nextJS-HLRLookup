@@ -1,7 +1,15 @@
+'use client';
+
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import { useState } from "react";
 
 export default function Lookup() {
+    const [hlrResults, setHlrResults] = useState([
+        {name: 'Query successful', message: 'error'},
+        {name: 'Query successful', message: 'error'},
+        {name: 'Query successful', message: 'error'},
+    ]);
     return (
         <>
             <Header
@@ -42,7 +50,7 @@ export default function Lookup() {
                     <div className="card p-2 mt-4 mb-4">
                         <h5>Results:</h5>
                         <small className="badge bg-success" style={{ maxWidth: "120px !important" }}>Query Successfull</small>
-                        <table>
+                        <table className="table">
                             <thead>
                                 <tr>
                                     <th>International format</th>
@@ -64,12 +72,14 @@ export default function Lookup() {
                         </table>
 
                         <ul className="list-group mt-4">
-                            <li className="list-group-item">
-                                <div className="row">
-                                    <div className="col-6">Query Successfull</div>
-                                    <div className="col-6">error</div>
-                                </div>
-                            </li>
+                            {hlrResults.map((item, index) => (
+                                <li key={index} className="list-group-item">
+                                    <div className="row">
+                                        <div className="col-6">{item.name}</div>
+                                        <div className="col-6">{item.message}</div>
+                                    </div>
+                                </li>
+                            ))}
                         </ul>
                     </div>
                 </section>

@@ -82,7 +82,7 @@ export default function Dashboard() {
                             <strong>&nbsp;HLR-EXAMPLE-REPORT</strong>
                         </li>
                         {exampleReport.map((item, index) => (
-                            <li className="list-group-item">
+                            <li key={index} className="list-group-item">
                                 <div className="row">
                                     <div className="col">
                                         <span>{item.label}</span>

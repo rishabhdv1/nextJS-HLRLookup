@@ -54,15 +54,11 @@ const PhoneLookup = () => {
     const fetchPricingData = async () => {
       try {
         const response = await fetch('/api/getpricing');
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
+        if (response.ok) {
+          const data = await response.json();
+          console.log("data >>", data.res);
+          setPricingData(data.res);
         }
-        const data = await response.json();
-        console.log("data >>", data.res);
-        
-
-        setPricingData(data.res);
       } catch (error) {
         console.error("Error fetching pricing data:", error);
       }
@@ -212,7 +208,7 @@ const PhoneLookup = () => {
               <h3 className="m-4">Easy phone number verification</h3>
               <div className="row">
                 {verification.map((item, index) => (
-                  <div key={item.id} className="col-md-4 mb-4">
+                  <div key={index} className="col-md-4 mb-4">
                     <div className="card p-4" style={{ minHeight: '250px' }}>
                       <FontAwesomeIcon style={{ fontSize: '2em', color: '#2563EB' }} className="mb-4" icon={iconMap[item.icon]} />
                       <h3 className="feature-title">{item.title}</h3>
@@ -238,7 +234,7 @@ const PhoneLookup = () => {
                   </thead>
                   <tbody>
                     { pricingData && pricingData.map((row:any, index:any) => (
-                      <tr key={row.lowerBound || index}>
+                      <tr key={index}>
                         <th scope="row">{row.lowerBound}</th>
                         <td>{row.upperBound}</td>
                         <td>{row.hlrLookup}</td>

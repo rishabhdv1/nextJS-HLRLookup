@@ -52,8 +52,8 @@ export default function Partners() {
         modules={[Autoplay]}
         className="w-full"
       >
-        {partners.map((partner) => (
-          <SwiperSlide key={partner.id} className="sSlide flex justify-center">
+        {partners.map((partner,index) => (
+          <SwiperSlide key={index} className="sSlide flex justify-center">
             <div className="p-4 bg-white rounded-lg">
               <img src={partner.logo} className="w-40 h-40 object-contain mx-auto" />
             </div>
@@ -78,8 +78,8 @@ export default function Partners() {
             modules={[Autoplay, Pagination, Navigation]}
             className="w-full"
         >
-            {clients.map((clients) => (
-            <SwiperSlide key={clients.id} className="sSlide flex justify-center">
+            {clients.map((clients,index) => (
+            <SwiperSlide key={index} className="sSlide flex justify-center">
                 <div className="p-4 bg-white d-flex align-content-between flex-wrap" style={{ minHeight: "300px" }}>
                     <span className="">{clients.testimonial}</span><br/>
                     <div className="row align-items-center">
