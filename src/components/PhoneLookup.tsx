@@ -11,6 +11,8 @@ import { log, timeStamp } from 'console';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faCheckCircle, faChevronCircleLeft, faChevronCircleRight, faDesktop, faGlobe, faPhone, faShield, faStopwatch, faTicket, faTty } from '@fortawesome/free-solid-svg-icons';
 import Partners from "./Partners";
+import Footer from "./Footer";
+import Header from "./Header";
 const iconMap: Record<string, any> = {
   phone: faPhone,
   desktop: faDesktop,
@@ -23,15 +25,15 @@ const iconMap: Record<string, any> = {
   tty: faTty,
 };
 const verification = [
-  { icon: 'phone', title: 'Fast Data Cleaning for Telephone Numbers', subtitle: 'Upload all your data in one go, in its current format. We\'ll insert your results alongside your original data, in the same order.'},
-  { icon: 'desktop', title: 'Simple API Integration', subtitle: 'Easy to use, easy to understand. Send up to 80 requests in one secure API request and we\'ll return the results quickly, in a clear format so you can integrate seamlessly.'},
-  { icon: 'globe', title: 'USA, Europe, Africa, Asia, Americas, Oceana coverage', subtitle: 'Extensive worldwide coverage for over 1200 mobile telephone network carriers.'},
-  { icon: 'shield', title: 'Reduce fraud with ported date details', subtitle: 'For 51 different countries we provide the last ported date for any ported mobile telephone number.'},
-  { icon: 'ticket', title: 'Fast automated top-up', subtitle: 'Quickly get back to business using our fully automated topup system.'},
-  { icon: 'book', title: 'Test and Analyse for free', subtitle: 'Sign up is free. Support is Free. Testing is free. We know you don’t know how valuable we are to your business without giving us a try first so all new accounts get free credits.'},
-  { icon: 'checkCircle', title: 'Eliminate Deduplication', subtitle: 'We can store your results for up to 30 days and provide your cached result at no charge. There’s no need to spend time checking your data against previous results.'},
-  { icon: 'stopWatch', title: 'Schedule batches', subtitle: 'We can store your results for up to 30 days and provide your cached result at no charge. There’s no need to spend time checking your data against previous results.'},
-  { icon: 'tty', title: 'Landline Validation', subtitle: 'HLR Lookup is compatible with the UK and Ireland landline networks, to detect if a landline telephone number is active. Not available outside the UK or Ireland.'},
+  { id: 1, icon: 'phone', title: 'Fast Data Cleaning for Telephone Numbers', subtitle: 'Upload all your data in one go, in its current format. We\'ll insert your results alongside your original data, in the same order.'},
+  { id: 2, icon: 'desktop', title: 'Simple API Integration', subtitle: 'Easy to use, easy to understand. Send up to 80 requests in one secure API request and we\'ll return the results quickly, in a clear format so you can integrate seamlessly.'},
+  { id: 3, icon: 'globe', title: 'USA, Europe, Africa, Asia, Americas, Oceana coverage', subtitle: 'Extensive worldwide coverage for over 1200 mobile telephone network carriers.'},
+  { id: 4, icon: 'shield', title: 'Reduce fraud with ported date details', subtitle: 'For 51 different countries we provide the last ported date for any ported mobile telephone number.'},
+  { id: 5, icon: 'ticket', title: 'Fast automated top-up', subtitle: 'Quickly get back to business using our fully automated topup system.'},
+  { id: 6, icon: 'book', title: 'Test and Analyse for free', subtitle: 'Sign up is free. Support is Free. Testing is free. We know you don’t know how valuable we are to your business without giving us a try first so all new accounts get free credits.'},
+  { id: 7, icon: 'checkCircle', title: 'Eliminate Deduplication', subtitle: 'We can store your results for up to 30 days and provide your cached result at no charge. There’s no need to spend time checking your data against previous results.'},
+  { id: 8, icon: 'stopWatch', title: 'Schedule batches', subtitle: 'We can store your results for up to 30 days and provide your cached result at no charge. There’s no need to spend time checking your data against previous results.'},
+  { id: 9, icon: 'tty', title: 'Landline Validation', subtitle: 'HLR Lookup is compatible with the UK and Ireland landline networks, to detect if a landline telephone number is active. Not available outside the UK or Ireland.'},
 ];
 
 const PhoneLookup = () => {
@@ -146,19 +148,15 @@ const PhoneLookup = () => {
   //3. Retrurn statement
   return (
     <div style={{ height: '100vh' }}>
-        <header className="bg-white">
-            <nav className="navbar">
-              <div className="container">
-                <a href="https://oceanpbx.club/" target="_blank" className="navbar-brand">
-                  <img className="img-fluid custom-logo" src="https://oceanpbx.club/assets/img/logo.png" alt="" />
-                </a>
-                <form className="d-flex">
-                  <button type="button" className="btn btn-outline-primary me-2" onClick={scrollToPricing}>Pricing</button>
-                  <a href="https://oceanpbx.club/store/dnrc-check" target="_blank" className="btn btn-primary">Buy Now</a>
-                </form>
-              </div>
-            </nav>
-        </header>
+        <Header scrollToPricing={scrollToPricing} 
+          buttons={
+            <>
+              <a href="https://oceanpbx.club/store/dnrc-check" className="btn btn-primary me-2">
+                Buy Now
+              </a>
+            </>
+          }
+        />
         <main>
           <section className="bg-custom" style={{ minHeight: '60vh' }}>
             <div className="container">
@@ -168,17 +166,6 @@ const PhoneLookup = () => {
 
                 <div className="card shadow p-4 mx-auto" >
                   <form onSubmit={handleSearch} >
-                    {/* <div className="input-group">
-                        <select  onChange={handleLookupTypeChange} id="lookupType" className="input-group-text">
-                            <option value="hlr">HLR</option>
-                            <option value="dncr">DNCR</option>
-                        </select>
-                        <select id="country-select" className="input-group-text w-25">
-                            <option value="">Select Country</option>
-                        </select>
-                        <input type="text" className="form-control" placeholder="Enter phone number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)} style={{ boxShadow: 'none', border: '1px solid #ccc' }} />
-                        <button className="btn btn-primary" type="submit">Search</button>
-                    </div> */}
                     <div className="row align-items-center">
                       <div className="col-sm-12 col-lg-2 mb-2">
                         <select onChange={handleLookupTypeChange} id="lookupType" className="form-control">
@@ -225,7 +212,7 @@ const PhoneLookup = () => {
               <h3 className="m-4">Easy phone number verification</h3>
               <div className="row">
                 {verification.map((item, index) => (
-                  <div key={index} className="col-md-4 mb-4">
+                  <div key={item.id} className="col-md-4 mb-4">
                     <div className="card p-4" style={{ minHeight: '250px' }}>
                       <FontAwesomeIcon style={{ fontSize: '2em', color: '#2563EB' }} className="mb-4" icon={iconMap[item.icon]} />
                       <h3 className="feature-title">{item.title}</h3>
@@ -251,7 +238,7 @@ const PhoneLookup = () => {
                   </thead>
                   <tbody>
                     { pricingData && pricingData.map((row:any, index:any) => (
-                      <tr key={index}>
+                      <tr key={row.lowerBound || index}>
                         <th scope="row">{row.lowerBound}</th>
                         <td>{row.upperBound}</td>
                         <td>{row.hlrLookup}</td>
@@ -267,22 +254,7 @@ const PhoneLookup = () => {
             </section>
           </div>
         </main>
-        <footer>
-          <nav className="navbar navbar-expand-lg border-top">
-            <div className="container">
-              <div className="row w-100 text-center text-md-start align-items-center">
-                <div className="col-md-8">
-                  <a className="navbar-brand" href="https://oceanpbx.club/">
-                    <img className="img-fluid w-25" src="https://oceanpbx.club/assets/img/logo.png" alt="" />
-                  </a>
-                </div>
-                <div className="col-12 col-md-4 text-md-end">
-                  <span className="d-block mt-2 ">Copyright © 2025 OceanPBX. All Rights Reserved.</span>
-                </div>
-              </div>
-            </div>
-          </nav>
-        </footer>
+        <Footer />
     </div>
   );
 };

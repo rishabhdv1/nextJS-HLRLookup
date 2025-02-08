@@ -4,7 +4,7 @@ import PhoneLookup from "@/components/PhoneLookup";
 
 export default function Home() {
   return (
-    <div className="">
+    <div>
       <PhoneLookup />
     </div>
   );
