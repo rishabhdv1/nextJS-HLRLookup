@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { faBarChart, faDownload, faPrint } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Image from "next/image";
 import { useState } from "react";
 import { ResponsiveContainer, BarChart, XAxis, YAxis, Tooltip, Legend, Bar, PieChart, Pie, Cell, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from "recharts";
 
@@ -64,8 +65,11 @@ export default function Dashboard() {
             <Header
                 buttons={
                     <>
-                      <a href="/dashboard" className="btn btn-outline-primary me-2">
+                      <a href="/user/dashboard" className="btn btn-outline-primary me-2">
                         Dashboard
+                      </a>
+                      <a href="/user/lookup" className="btn btn-outline-primary me-2">
+                        Lookup
                       </a>
                       <button className="btn btn-primary">
                         Logout
@@ -78,7 +82,12 @@ export default function Dashboard() {
                 <section>
                     <ul className="list-group">
                         <li className="list-group-item">
-                            <FontAwesomeIcon style={{ fontSize: "1em" }} icon={faBarChart} />
+                            <Image
+                                src="/images/chart-bar-solid.svg"
+                                alt="Example Report"
+                                width={18}
+                                height={18}
+                            />
                             <strong>&nbsp;HLR-EXAMPLE-REPORT</strong>
                         </li>
                         {exampleReport.map((item, index) => (
@@ -108,7 +117,7 @@ export default function Dashboard() {
                 {/* Pie Chart - Mobile Network Operators */}
                 <section className="mt-4">
                     <h2 className="text-center">Mobile Network Operators</h2>
-                    <p>The analyzed data contains a total of 5 distinct mobile network operators (MNOs). Swisscom (CH) has been detected the most with 4,766 (56 %) MSISDNs belonging to this network. It's followed by Sunrise (CH) with 3,447 (41 %) MSISDNs and Salt (CH) in third place with a total of 238 (3 %) detected MSISDNs.</p>
+                    <p>The analysis detected 5 mobile network operators. Swisscom (CH) leads with 4,766 (56%) MSISDNs, followed by Sunrise (CH) with 3,447 (41%) and Salt (CH) with 238 (3%).</p>
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={mobileNetworkData}>
                             <XAxis dataKey="name" />
@@ -123,7 +132,7 @@ export default function Dashboard() {
                 {/* Pie Chart - Connectivity Statuses */}
                 <section className="mt-4">
                     <h2 className="text-center">Connectivity Statuses</h2>
-                    <p>This sample contains 8500 MSISDNs. 4334 (51%) out of these numbers mobile phone numbers are connected to their mobile network and currently reachable. 744 (9%) of the mobile phone numbers are valid but currently absent (e.g. the target device is switched off or out of network reach). 3307 (39) MSISDNs returned as invalid numbers and 115 (1%) of numbers ran into an exception or another kind of error and their connectivity status could not be determined. 0 (0%) of the MSISDNs are still queued on currently being processed.</p>
+                    <p>This sample includes 8,500 MSISDNs: 4,334 (51%) are connected and reachable, 744 (9%) are valid but currently absent, 3,307 (39%) are invalid, and 115 (1%) encountered errors. None are still being processed.</p>
                     <div className="row">
                         <div className="col-6">
                             <ResponsiveContainer width="100%" height={300}>
@@ -154,7 +163,7 @@ export default function Dashboard() {
                 {/* Pie Chart - Connectivity Statuses by Mobile Network Operator */}
                 <section className="mt-4">
                     <h2 className="text-center">Connectivity Statuses by Mobile Network Operator</h2>
-                    <p>This section describes the connectivity status distribution by mobile network operator. The most connected subscribers were detected on the Swisscom network with 2,363 MSISDNs or an extraction rate of 50%. The highest number of absent subscribers was at Swisscom with 721 MSISDNs disconnected or 15% of all Swisscom MSISDNs.</p>
+                    <p>This section details connectivity by operator. Swisscom had the most connected subscribers with 2,363 MSISDNs (50% extraction rate) and the highest absent subscribers at 721 MSISDNs (15%).</p>
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={imsiData}>
                             <XAxis dataKey="name" />
@@ -170,7 +179,7 @@ export default function Dashboard() {
                 {/* Pie Chart - Processing Statuses */}
                 <section className="mt-4">
                     <h2 className="text-center">Processing Statuses</h2>
-                    <p>This sample contains 8,500 MSISDNs. 8,500 (100%) of those have mobile phone numbers have been processed. 0 (0%) lookups are still queued or being processed. 8,426 (99%) lookups have have received a valid response from the HLR (or MNP DB) while 0 (0%) queries have been rejected without charge (because the numbers were invalid or due to lack of network connectivity to the target operator). 74 (1%) of the lookups have failed due to an error or other exception.</p>
+                    <p>All 8,500 MSISDNs have been processed, with 8,426 (99%) receiving valid HLR/MNP responses. No queries were rejected, and 74 (1%) failed due to errors.</p>
                     <div className="row">
                         <div className="col-6">
                             <ResponsiveContainer width="100%" height={300}>
@@ -201,7 +210,7 @@ export default function Dashboard() {
                 {/* Bar Chart - IMSI, MSCs, Ported & Roaming Data */}
                 <section className="mt-4">
                     <h2 className="text-center">IMSIs, MSCs, Ported and Roaming Data per Mobile Network Operator</h2>
-                    <p>N/A had an extraction rate of 0 % for IMSIs. That's 0 IMSIs for 18 submitted MSISDNs. 0 MSCs could be extracted for Lycamobile, which equals an extraction rate of 0 % for 31 submitted MSISDNs and out of 238 MSISDNs belonging to Salt 100 % were ported. That is 237 numbers overall.</p>
+                    <p>N/A and Lycamobile had a 0% IMSI and MSC extraction rate for 18 and 31 MSISDNs, respectively. For Salt, 100% of 238 MSISDNs were ported, totaling 237 numbers.</p>
                     <ResponsiveContainer width="100%" height={300}>
                         <BarChart data={imsiData}>
                             <XAxis dataKey="name" />

@@ -147,6 +147,9 @@ const PhoneLookup = () => {
         <Header scrollToPricing={scrollToPricing} 
           buttons={
             <>
+              <a href="user/dashboard" className="btn btn-outline-primary me-2">
+                Dashboard
+              </a>
               <a href="https://oceanpbx.club/store/dnrc-check" className="btn btn-primary me-2">
                 Buy Now
               </a>
